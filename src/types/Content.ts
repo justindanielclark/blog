@@ -15,4 +15,5 @@ type Header = {
 
 type Content = Paragraph | Image | Header;
 
+export type { Paragraph, Image, Header };
 export default Content;
