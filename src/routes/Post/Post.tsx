@@ -9,11 +9,11 @@ function PostContentConverter(content: Array<Content>): Array<JSX.Element> {
     let returnVal: JSX.Element;
     switch (contentItem.type) {
       case "paragraph": {
-        returnVal = React.createElement("p", { className: "text-white" }, contentItem.content);
+        returnVal = React.createElement("p", { className: "" }, contentItem.content);
         break;
       }
       case "header": {
-        returnVal = React.createElement("h1", { className: "text-white text-3xl" }, contentItem.content);
+        returnVal = React.createElement("h1", { className: "text-3xl" }, contentItem.content);
         break;
       }
       case "image": {

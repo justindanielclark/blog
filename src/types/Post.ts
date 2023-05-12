@@ -1,7 +1,14 @@
 import Content from "./Content";
 
+type PostUpload = {
+  title: string;
+  categories: Array<string>;
+  content: Array<Content>;
+};
+
 type PostJSON = {
   _id: string;
+  categories: Array<string>;
   title: string;
   post_date: string;
   content: Array<Content>;
@@ -9,6 +16,7 @@ type PostJSON = {
 
 type Post = {
   _id: string;
+  categories: Array<string>;
   title: string;
   post_date: Date;
   content: Array<Content>;
@@ -21,5 +29,5 @@ export function convertPostJSONtoPost(postJSON: PostJSON): Post {
   };
 }
 
-export type { Post, PostJSON };
+export type { Post, PostJSON, PostUpload };
 export default Post;

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useLoaderData } from "react-router-dom";
 import { Form } from "react-router-dom";
 import Content, { Paragraph, Header, Image } from "../../types/Content";
 import { v4 as uuidv4 } from "uuid";
+import _api from "../../api/_api";
 
 type withUUID = {
   _id: string;
@@ -18,20 +20,21 @@ type State = {
 
 function Admin() {
   const [state, setState] = useState<State>(initializeState());
+  const categories = useLoaderData() as Array<string>;
   return (
     <div className="mx-auto max-w-xl">
       <div className="text-sm my-2">
-        <button className=" bg-green-800 rounded-lg p-1 mr-2" onClick={addHeader}>
+        <button className=" bg-green-800 text-white rounded-lg p-1 mr-2" onClick={addHeader}>
           Add Header
         </button>
-        <button className=" bg-green-800 rounded-lg p-1 mx-2" onClick={addParagraph}>
+        <button className=" bg-green-800 text-white rounded-lg p-1 mx-2" onClick={addParagraph}>
           Add Paragraph
         </button>
-        <button className=" bg-green-800 rounded-lg p-1 mx-2" onClick={addImage}>
+        <button className=" bg-green-800 text-white rounded-lg p-1 mx-2" onClick={addImage}>
           Add Image
         </button>
       </div>
-      <Form>
+      <Form method="post">
         <div>
           <label>Title:</label>
           <input
@@ -40,63 +43,139 @@ function Admin() {
             placeholder="A Very Cool Title"
             value={state.title}
             onChange={(e) => onChangeTitle(e)}
+            name="title"
           />
         </div>
-        {generateInputs(state.content)}
-        <button className="block bg-green-800 rounded-lg p-1 my-2">Submit</button>
+        <div>
+          <label>Category:</label>
+          <div className="flex flex-row gap-6">
+            {categories.map((category, idx) => {
+              return (
+                <div key={idx}>
+                  <label htmlFor={`category_${category}`}>
+                    <input type="checkbox" className="mr-1" name={`category_${category}`} />
+                    {`${category.substring(0, 1).toUpperCase()}${category.substring(1)}`}
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+        {state.content.map((content, idx) => {
+          let returnVal: JSX.Element;
+          switch (content.type) {
+            case "paragraph": {
+              returnVal = (
+                <div key={content._id} className="relative">
+                  <label htmlFor={`content_${idx}_paragraph`}>Paragraph:</label>
+                  <textarea
+                    name={`content_${idx}_paragraph`}
+                    data-index={idx}
+                    className="text-black text-sm block w-full resize-none p-1"
+                    rows={5}
+                    value={content.content}
+                    placeholder="Placeholder Text"
+                    onChange={(e) => onChangeParagraph(e)}
+                  />
+                  <button
+                    className="absolute right-0 top-0"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      removeItem(content._id);
+                    }}
+                  >
+                    X
+                  </button>
+                </div>
+              );
+              break;
+            }
+            case "header": {
+              returnVal = (
+                <div className="relative" key={content._id}>
+                  <label htmlFor={`content_${idx}_header`}>Header</label>
+                  <input
+                    type="text"
+                    name={`content_${idx}_header`}
+                    data-index={idx}
+                    value={content.content}
+                    className="text-black text-sm block w-full p-1"
+                    onChange={(e) => onChangeHeader(e)}
+                  />
+                  <button
+                    className="absolute right-0 top-0"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      removeItem(content._id);
+                    }}
+                  >
+                    X
+                  </button>
+                </div>
+              );
+              break;
+            }
+            case "image": {
+              returnVal = <div>SOMETHING HAS GONE WRONG</div>;
+            }
+          }
+          return returnVal;
+        })}
+        <button type="submit" className="block bg-green-800 text-white rounded-lg p-1 my-2">
+          Submit
+        </button>
       </Form>
     </div>
   );
   function initializeState(): State {
     return {
-      title: "",
-      content: [],
+      title: "A Title",
+      content: [
+        {
+          _id: "1",
+          type: "header",
+          content: "Header 1",
+        },
+        {
+          _id: "2",
+          type: "paragraph",
+          content: "Paragraph 1",
+        },
+        {
+          _id: "3",
+          type: "paragraph",
+          content: "Paragraph 2",
+        },
+        {
+          _id: "4",
+          type: "header",
+          content: "Header 2",
+        },
+        {
+          _id: "5",
+          type: "paragraph",
+          content: "Paragraph 3",
+        },
+        {
+          _id: "6",
+          type: "paragraph",
+          content: "Paragraph 4",
+        },
+        {
+          _id: "7",
+          type: "paragraph",
+          content: "Paragraph 5",
+        },
+      ],
     };
   }
-  function generateInputs(content: Array<ContentWithID>): Array<JSX.Element> {
-    return content.map((item, idx) => {
-      let returnVal: JSX.Element;
-      switch (item.type) {
-        case "paragraph": {
-          returnVal = React.createElement("div", { className: "text-white", key: item._id }, [
-            React.createElement("label", { key: `${item._id}_label` }, "Paragraph:"),
-            React.createElement("textarea", {
-              "data-index": idx,
-              key: `${item._id}_input`,
-              className: "text-black text-sm block w-full resize-none p-1",
-              rows: 5,
-              value: item.content,
-              placeholder: "Placeholder text",
-              onChange: (e) => onChangeParagraph(e as React.ChangeEvent<HTMLTextAreaElement>),
-            }),
-          ]);
-          break;
-        }
-        case "header": {
-          returnVal = React.createElement("div", { className: "text-white", key: item._id }, [
-            React.createElement("label", { className: "block", key: `${item._id}_label` }, "Header:"),
-            React.createElement("input", {
-              "data-index": idx,
-              key: `${item._id}_input`,
-              type: "text",
-              value: item.content,
-              className: "text-black text-sm block w-full p-1",
-              onChange: (e) => onChangeHeader(e as React.ChangeEvent<HTMLInputElement>),
-            }),
-          ]);
-          break;
-        }
-        case "image": {
-          returnVal = React.createElement("div", { className: "text-white", key: item._id }, [
-            React.createElement("label", {}, "Paragraph:"),
-          ]);
-          break;
-        }
-        default: {
-          returnVal = React.createElement("p", {}, "There has been an error you dork");
-        }
-      }
-      return returnVal;
+  function removeItem(uuid: string): void {
+    setState((x) => {
+      const newState = {
+        ...x,
+        content: x.content.filter((item) => item._id !== uuid),
+      };
+      return newState;
     });
   }
   function addParagraph(): void {
