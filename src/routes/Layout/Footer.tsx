@@ -1,8 +1,5 @@
-type Props = {
-  className?: string;
-};
-function Footer({ className }: Props) {
-  return <div className={className || ""}>Footer</div>;
+function Footer() {
+  return <footer className="p-3 bg-slate-900 text-white">Footer</footer>;
 }
 
 export default Footer;

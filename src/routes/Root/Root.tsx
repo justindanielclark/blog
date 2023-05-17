@@ -1,21 +1,45 @@
-import { useLoaderData } from "react-router-dom";
 import Post from "../../types/Post";
-import PostListItem from "../../components/PostListItem/PostListItem";
-
+import { useLoaderData, NavLink } from "react-router-dom";
+import capitalizeFirstLetters from "../../utils/capitalizeFirstLetters";
+import createDateString from "../../utils/createDateString";
 function Root() {
-  const data = useLoaderData() as Array<Post>;
+  const posts = useLoaderData() as Array<Post>;
   return (
     <>
-      {data.length > 0 ? (
-        <ul>
-          {data.map((datum, index) => {
-            return <PostListItem post={datum} key={index} />;
+      {posts.length > 0 ? (
+        <ul className="">
+          {posts.map((post) => {
+            return <PostListItem post={post} key={post._id} />;
           })}
         </ul>
       ) : (
-        <div>There are no Posts...</div>
+        <p>No Posts In Database...</p>
       )}
     </>
+  );
+}
+
+type PostListItemProps = {
+  post: Post;
+};
+function PostListItem({ post }: PostListItemProps) {
+  return (
+    <li className="hover:bg-slate-800 hover:text-white p-3">
+      <NavLink to={`/post/${post._id}`} rel="true">
+        <h1 className="font-bold text-lg">{post.title}</h1>
+        <p className="ml-1 font-bold text-sm">Posted: {createDateString(post.post_date)}</p>
+        {post.categories.length > 0 && (
+          <p className="ml-2 text-sm">
+            <span className="mr-2">Categories:</span>
+            {post.categories.map((category, idx) => (
+              <span key={idx} className="mr-2">
+                {capitalizeFirstLetters(category)}
+              </span>
+            ))}
+          </p>
+        )}
+      </NavLink>
+    </li>
   );
 }
 

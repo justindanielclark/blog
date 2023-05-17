@@ -1,39 +1,25 @@
-import React from "react";
-import Content from "../../types/Content";
 import Post from "../../types/Post";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
+import capitalizeFirstLetters from "../../utils/capitalizeFirstLetters";
 import createDateString from "../../utils/createDateString";
 
-function PostContentConverter(content: Array<Content>): Array<JSX.Element> {
-  return content.map((contentItem) => {
-    let returnVal: JSX.Element;
-    switch (contentItem.type) {
-      case "paragraph": {
-        returnVal = React.createElement("p", { className: "" }, contentItem.content);
-        break;
-      }
-      case "header": {
-        returnVal = React.createElement("h1", { className: "text-3xl" }, contentItem.content);
-        break;
-      }
-      case "image": {
-        returnVal = React.createElement("img", {});
-        break;
-      }
-    }
-    return returnVal;
-  });
-}
-
 function Post() {
-  const data = useLoaderData() as Post;
-  const PostContent = PostContentConverter(data.content);
+  const post = useLoaderData() as Post;
   return (
-    <div>
-      <h1 className="text-3xl">{data.title}</h1>
-      <h2 className="text-sm">{createDateString(data.post_date)}</h2>
-      {PostContent}
-    </div>
+    <>
+      <Link to={"/"}> {"<-"} Back to Homepage</Link>
+      <h1 className="font-bold text-xl">{post.title}</h1>
+      <p>Posted: {createDateString(post.post_date)}</p>
+      <p>
+        Categories:{" "}
+        {post.categories.map((category, idx) => (
+          <span key={idx} className="ml-2">
+            {capitalizeFirstLetters(category)}
+          </span>
+        ))}
+      </p>
+      <div className="p-3" dangerouslySetInnerHTML={{ __html: post.content }}></div>
+    </>
   );
 }
 

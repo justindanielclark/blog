@@ -1,33 +1,18 @@
-import Content from "./Content";
-
-type PostUpload = {
-  title: string;
-  categories: Array<string>;
-  content: Array<Content>;
-};
-
-type PostJSON = {
-  _id: string;
-  categories: Array<string>;
-  title: string;
-  post_date: string;
-  content: Array<Content>;
-};
-
 type Post = {
   _id: string;
-  categories: Array<string>;
   title: string;
+  content: string;
   post_date: Date;
-  content: Array<Content>;
+  categories: Array<string>;
 };
 
-export function convertPostJSONtoPost(postJSON: PostJSON): Post {
-  return {
-    ...postJSON,
-    post_date: new Date(postJSON.post_date),
-  };
-}
+type JSON_Post = {
+  _id: string;
+  title: string;
+  content: string;
+  post_date: string;
+  categories: Array<string>;
+};
 
-export type { Post, PostJSON, PostUpload };
+export type { Post, JSON_Post };
 export default Post;
