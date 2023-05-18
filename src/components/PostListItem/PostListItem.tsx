@@ -5,11 +5,12 @@ import capitalizeFirstLetters from "../../utils/capitalizeFirstLetters";
 
 type PostListItemProps = {
   post: Post;
+  to: string;
 };
-export default function PostListItem({ post }: PostListItemProps) {
+export default function PostListItem({ post, to }: PostListItemProps) {
   return (
     <li className="hover:bg-slate-800 hover:text-white p-3">
-      <NavLink to={`/post/${post._id}`} rel="true">
+      <NavLink to={to} rel="true">
         <h1 className="font-bold text-lg">{post.title}</h1>
         <p className="ml-1 font-bold text-sm">Posted: {createDateString(post.post_date)}</p>
         {post.categories.length > 0 && (

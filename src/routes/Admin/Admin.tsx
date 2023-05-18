@@ -1,4 +1,4 @@
-import { Link, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 function Admin() {
   return (
     <div className="flex-1 flex flex-row">
@@ -6,19 +6,29 @@ function Admin() {
         <h1 className="font-bold text-lg">Actions:</h1>
         <ul>
           <li>
-            <Link to={"./post/new"}>Create New Post</Link>
+            <NavLink className={({ isActive }) => (isActive ? "bg-blue-200" : "")} to={"./post/new"}>
+              Create New Post
+            </NavLink>
           </li>
           <li>
-            <Link to={"./post/edit"}>Edit Post</Link>
+            <NavLink className={({ isActive }) => (isActive ? "bg-blue-200" : "")} to={"./post/edit"}>
+              Edit Post
+            </NavLink>
           </li>
           <li>
-            <Link to={"./post/delete"}>Delete Post</Link>
+            <NavLink className={({ isActive }) => (isActive ? "bg-blue-200" : "")} to={"./post/delete"}>
+              Delete Post
+            </NavLink>
           </li>
           <li>
-            <Link to={"./image/new"}>Upload New Image To Server</Link>
+            <NavLink className={({ isActive }) => (isActive ? "bg-blue-200" : "")} to={"./image/new"}>
+              Upload New Image To Server
+            </NavLink>
           </li>
           <li>
-            <Link to={"./image/delete"}>Delete Image From Server</Link>
+            <NavLink className={({ isActive }) => (isActive ? "bg-blue-200" : "")} to={"./image/delete"}>
+              Delete Image From Server
+            </NavLink>
           </li>
         </ul>
       </div>

@@ -9,7 +9,7 @@ function Root() {
       {posts.length > 0 ? (
         <ul className="">
           {posts.map((post) => {
-            return <PostListItem post={post} key={post._id} />;
+            return <PostListItem post={post} key={post._id} to={`/post/${post._id}`} />;
           })}
         </ul>
       ) : (

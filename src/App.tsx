@@ -13,6 +13,9 @@ import CreatePostLoader from "./routes/Admin/Posts/CreatePost/CreatePostLoader";
 import CreatePostAction from "./routes/Admin/Posts/CreatePost/CreatePostAction";
 import EditPost from "./routes/Admin/Posts/EditPost/EditPost";
 import EditPostLoader from "./routes/Admin/Posts/EditPost/EditPostLoader";
+import EditIndivPost from "./routes/Admin/Posts/EditPost/IndividualPost/EditIndivPost";
+import EditIndivPostLoader from "./routes/Admin/Posts/EditPost/IndividualPost/EditIndivPostLoader";
+import EditIndivPostAction from "./routes/Admin/Posts/EditPost/IndividualPost/EditIndivPostAction";
 
 function App() {
   const router = createBrowserRouter([
@@ -42,6 +45,12 @@ function App() {
               path: "post/edit",
               element: <EditPost />,
               loader: EditPostLoader,
+            },
+            {
+              path: "post/edit/:postID",
+              element: <EditIndivPost />,
+              loader: EditIndivPostLoader,
+              action: EditIndivPostAction,
             },
             {
               path: "post/delete",

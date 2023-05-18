@@ -9,7 +9,7 @@ function EditPost() {
       {posts.length > 0 ? (
         <ul className="">
           {posts.map((post) => {
-            return <PostListItem post={post} key={post._id} />;
+            return <PostListItem post={post} key={post._id} to={`/admin/post/edit/${post._id}`} />;
           })}
         </ul>
       ) : (
