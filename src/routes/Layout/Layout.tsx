@@ -6,7 +6,7 @@ function Layout() {
   return (
     <div className="flex flex-col flex-1 max-h-screen">
       <Header />
-      <div className="flex-auto overflow-x-hidden relative">
+      <div id="layoutbody" className="overflow-x-hidden relative flex-1 flex flex-col">
         <Outlet />
       </div>
       <Footer />

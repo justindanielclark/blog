@@ -1,8 +1,8 @@
-import Post from "../../types/Post";
+import PostListItem from "../../../../components/PostListItem/PostListItem";
+import Post from "../../../../types/Post";
 import { useLoaderData } from "react-router-dom";
-import PostListItem from "../../components/PostListItem/PostListItem";
 
-function Root() {
+function EditPost() {
   const posts = useLoaderData() as Array<Post>;
   return (
     <>
@@ -19,4 +19,4 @@ function Root() {
   );
 }
 
-export default Root;
+export default EditPost;

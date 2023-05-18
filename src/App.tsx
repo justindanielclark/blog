@@ -8,6 +8,11 @@ import RootLoader from "./routes/Root/RootLoader";
 import Redirect from "./routes/Redirect/Redirect";
 import InternalServerError from "./routes/InternalServerError/InternalServerError";
 import Login from "./routes/Login/Login";
+import CreatePost from "./routes/Admin/Posts/CreatePost/CreatePost";
+import CreatePostLoader from "./routes/Admin/Posts/CreatePost/CreatePostLoader";
+import CreatePostAction from "./routes/Admin/Posts/CreatePost/CreatePostAction";
+import EditPost from "./routes/Admin/Posts/EditPost/EditPost";
+import EditPostLoader from "./routes/Admin/Posts/EditPost/EditPostLoader";
 
 function App() {
   const router = createBrowserRouter([
@@ -29,11 +34,14 @@ function App() {
           children: [
             {
               path: "post/new",
-              element: <div>I am trying to create a new post</div>,
+              element: <CreatePost />,
+              loader: CreatePostLoader,
+              action: CreatePostAction,
             },
             {
               path: "post/edit",
-              element: <div>I am trying to edit a post</div>,
+              element: <EditPost />,
+              loader: EditPostLoader,
             },
             {
               path: "post/delete",
