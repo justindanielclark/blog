@@ -14,16 +14,14 @@ export default function PostListItem({ post, to }: PostListItemProps) {
         <h1 className="font-bold text-lg">{post.title}</h1>
         <p className="ml-1 font-bold text-sm">Posted: {createDateString(post.post_date)}</p>
         {post.categories.length > 0 && (
-          <p className="ml-2 text-xs my-2">
+          <div className="ml-2 text-xs my-2">
             {post.categories.map((category, idx) => (
-              <>
-                <span key={idx} className="p-0.5 bg-blue-800 rounded text-white">
-                  {capitalizeFirstLetters(category)}
-                </span>
+              <div key={category}>
+                <span className="p-0.5 bg-blue-800 rounded text-white">{capitalizeFirstLetters(category)}</span>
                 {idx !== post.categories.length - 1 && <span className="mx-2 text-xs font-bold">/</span>}
-              </>
+              </div>
             ))}
-          </p>
+          </div>
         )}
       </NavLink>
     </li>

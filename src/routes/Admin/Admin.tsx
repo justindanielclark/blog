@@ -21,12 +21,17 @@ function Admin() {
             </NavLink>
           </li>
           <li>
-            <NavLink className={({ isActive }) => (isActive ? "bg-blue-200" : "")} to={"./image/new"}>
+            <NavLink className={({ isActive }) => (isActive ? "bg-blue-200" : "")} to={"./images"} end>
+              View Images
+            </NavLink>
+          </li>
+          <li>
+            <NavLink className={({ isActive }) => (isActive ? "bg-blue-200" : "")} to={"./images/new"}>
               Upload New Image To Server
             </NavLink>
           </li>
           <li>
-            <NavLink className={({ isActive }) => (isActive ? "bg-blue-200" : "")} to={"./image/delete"}>
+            <NavLink className={({ isActive }) => (isActive ? "bg-blue-200" : "")} to={"./images/delete"}>
               Delete Image From Server
             </NavLink>
           </li>

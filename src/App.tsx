@@ -16,6 +16,8 @@ import EditPostLoader from "./routes/Admin/Posts/EditPost/EditPostLoader";
 import EditIndivPost from "./routes/Admin/Posts/EditPost/IndividualPost/EditIndivPost";
 import EditIndivPostLoader from "./routes/Admin/Posts/EditPost/IndividualPost/EditIndivPostLoader";
 import EditIndivPostAction from "./routes/Admin/Posts/EditPost/IndividualPost/EditIndivPostAction";
+import UploadImages from "./routes/Admin/Images/UploadImage/UploadImages";
+import UploadImageAction from "./routes/Admin/Images/UploadImage/UploadImageAction";
 
 function App() {
   const router = createBrowserRouter([
@@ -57,11 +59,12 @@ function App() {
               element: <div>I am trying to delete a post</div>,
             },
             {
-              path: "image/new",
-              element: <div>I am trying to create a new image</div>,
+              path: "images/new",
+              element: <UploadImages />,
+              action: UploadImageAction,
             },
             {
-              path: "image/delete",
+              path: "images/delete",
               element: <div>I am trying to delete an old image</div>,
             },
           ],
